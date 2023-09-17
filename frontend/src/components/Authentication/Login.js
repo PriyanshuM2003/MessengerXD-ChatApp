@@ -24,8 +24,6 @@ const Login = () => {
   const toast = useToast();
   const navigate = useNavigate();
 
-  console.log("server", process.env.REACT_APP_SERVER);
-
   const submitHandler = async () => {
     setLoading(true);
     if (!email || !password) {
