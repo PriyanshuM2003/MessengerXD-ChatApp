@@ -7,7 +7,6 @@ const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const cors = require("cors");
 // const path = require("path");
-const { createProxyMiddleware } = require("http-proxy-middleware");
 
 dotenv.config();
 const app = express();
@@ -35,24 +34,18 @@ app.use("/api/message", messageRoutes);
 //   });
 // }
 
-const corsOptions = {
-  origin: "https://messengerxd.vercel.app",
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-};
-
+// const corsOptions = {
+//   origin: "https://messengerxd.vercel.app",
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+// };
 app.use(
-  "/api", // Route to proxy
-  createProxyMiddleware({
-    target: "https://messengerxdapi.onrender.com",
-    changeOrigin: true,
-    pathRewrite: {
-      "^/api": "",
-    },
+  cors({
+    origin: "https://messengerxd.vercel.app",
   })
 );
 //! --------------------------deployment-----------------------------
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 app.use(notFound);
 app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
