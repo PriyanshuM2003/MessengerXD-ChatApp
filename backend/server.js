@@ -7,6 +7,7 @@ const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const cors = require("cors");
 // const path = require("path");
+const { createProxyMiddleware } = require("http-proxy-middleware");
 
 dotenv.config();
 const app = express();
@@ -39,6 +40,16 @@ const corsOptions = {
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 };
 
+app.use(
+  "/api", // Route to proxy
+  createProxyMiddleware({
+    target: "https://messengerxdapi.onrender.com",
+    changeOrigin: true,
+    pathRewrite: {
+      "^/api": "",
+    },
+  })
+);
 //! --------------------------deployment-----------------------------
 
 app.use(cors(corsOptions));
