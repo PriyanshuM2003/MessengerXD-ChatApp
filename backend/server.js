@@ -34,18 +34,17 @@ app.use("/api/message", messageRoutes);
 //   });
 // }
 
-// const corsOptions = {
-//   origin: "https://messengerxd.vercel.app",
-//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-// };
-app.use(
-  cors({
-    origin: "https://messengerxd.vercel.app",
-  })
-);
+const corsOptions = {
+  origin: "https://messengerxd.vercel.app",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
 //! --------------------------deployment-----------------------------
 
-// app.use(cors(corsOptions));
 app.use(notFound);
 app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
