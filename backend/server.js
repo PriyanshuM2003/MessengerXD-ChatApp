@@ -14,6 +14,16 @@ connectDB();
 
 app.use(express.json());
 
+const corsOptions = {
+  origin: "https://messengerxd.vercel.app",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
+
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
@@ -33,16 +43,6 @@ app.use("/api/message", messageRoutes);
 //     res.send("API is running..");
 //   });
 // }
-
-const corsOptions = {
-  origin: "https://messengerxd.vercel.app",
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
-
-app.use(cors(corsOptions));
 //! --------------------------deployment-----------------------------
 
 app.use(notFound);
